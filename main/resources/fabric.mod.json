@@ -1,0 +1,45 @@
+{
+	"schemaVersion": 1,
+	"id": "slugcatmovement",
+	"version": "${version}",
+	"name": "Rainworld Movement",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/slugcatmovement/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"pencil.slugcatmovement.RainworldMovement"
+		],
+		"client": [
+			"pencil.slugcatmovement.RainworldMovementClient"
+		],
+		"fabric-datagen": [
+			"pencil.slugcatmovement.RainworldMovementDataGenerator"
+		]
+	},
+	"mixins": [
+		"slugcatmovement.mixins.json",
+		{
+			"config": "slugcatmovement.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*",
+		"fabric-key-binding-api-v1": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
