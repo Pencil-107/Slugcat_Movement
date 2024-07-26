@@ -35,8 +35,10 @@ public class RainworldMovementClient implements ClientModInitializer {
 		});
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			if (crawlKey.isPressed()) {
-				// pencil.slugcatmovement.movement.Crawl.tick(client);
+			if (client.player != null) {
+				if (crawlKey.isPressed()) {
+					pencil.slugcatmovement.movement.Crawl.tick(client);
+				}
 			}
 		});
 	}
