@@ -2,28 +2,19 @@ package pencil.slugcatmovement;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.listener.PacketListener;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.network.ServerPlayerInteractionManager;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
-import net.minecraft.world.StructureSpawns;
-import net.minecraft.world.World;
-import net.minecraft.world.entity.EntityChangeListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import net.minecraft.entity.player.*;
+import pencil.slugcatmovement.init.BlockInit;
+import pencil.slugcatmovement.init.ItemInit;
+
+import java.util.UUID;
 
 public class RainworldMovement implements ModInitializer{
 	// This logger is used to write text to the console and the log file.
@@ -36,25 +27,20 @@ public class RainworldMovement implements ModInitializer{
 
 	@Override
 	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
-		ServerTickEvents.START_SERVER_TICK.register(server1 -> { // Runs every Server Tick
-			ServerPlayNetworking.registerGlobalReceiver(CRAWL_PACKET_ID, ((server, player1, handler, buf, responseSender) -> {
-				server.execute(() -> { // Set Collision
-					player1.setBoundingBox(Box.of(player1.getBoundingBox().getCenter(), buf.readFloat(), buf.readFloat(), buf.readFloat()));
-					player1.setPose(EntityPose.SWIMMING);
-					player1.setBoundingBox(Box.of(player1.getBoundingBox().getCenter(), 0.6, 0.6, 0.6));
-				});
-			}));
-		});
+		ItemInit.load();
+		BlockInit.load();
 		LOGGER.info("Hello Fabric world!");
-	}
 
-	public static void makeCrawl(PlayerEntity player, Float speed) {
-		player.setMovementSpeed(speed);
-		//player.setPose(EntityPose.SWIMMING);
-		//player.setBoundingBox(Box.of(player.getBoundingBox().getCenter(), 0.6, 0.6, 0.6));
+		ServerSidePacketRegistry.INSTANCE.register(CRAWL_PACKET_ID, (packetContext, attachedData) -> {
+			Boolean moving = attachedData.readBoolean(); // Get the speed set earlier in the client
+			packetContext.getTaskQueue().execute(() -> { // Execute on the main thread
+				if(packetContext.getPlayer() != null){
+					packetContext.getPlayer().setPose(EntityPose.SWIMMING);
+					packetContext.getPlayer().setBoundingBox(Box.of(packetContext.getPlayer().getBoundingBox().getCenter(), 0.6f, 0.6f, 0.6f));
+				}
+
+			});
+		});
 	}
 
 	public static Identifier id(String path) {

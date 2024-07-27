@@ -18,8 +18,8 @@ public class wallJump {
                     BlockHitResult hit = client.world.raycast( // Raycast Shooter
                             new RaycastContext(
                                     // raycast shoots thin box from center of player torso in the direction of Second Corner
-                                    client.player.getPos().subtract(0.1, -.9, 0.1), // First Corner
-                                    client.player.getPos().add(0.1, 1, 0.5), // Second Corner
+                                    new Vec3d(client.player.getBoundingBox().minX, client.player.getBoundingBox().minY, client.player.getBoundingBox().minZ), // First Corner
+                                    new Vec3d(client.player.getBoundingBox().maxX, client.player.getBoundingBox().maxY, client.player.getBoundingBox().maxZ), // Second Corner
                                     RaycastContext.ShapeType.COLLIDER, // ShapeType
                                     RaycastContext.FluidHandling.NONE, client.player)); // extra Variables
                     if (hit.getType() == HitResult.Type.BLOCK) { // check if the detected thing is a block
@@ -33,8 +33,8 @@ public class wallJump {
                 if (client.player.getHorizontalFacing() == Direction.SOUTH) {
                     BlockHitResult hit = client.world.raycast(
                             new RaycastContext(
-                                    client.player.getPos().subtract(0.1, -.9, 0.1),
-                                    client.player.getPos().add(0.1, 1, -0.5),
+                                    new Vec3d(client.player.getBoundingBox().minX, client.player.getBoundingBox().minY, client.player.getBoundingBox().minZ), // First Corner
+                                    new Vec3d(client.player.getBoundingBox().maxX, client.player.getBoundingBox().maxY, client.player.getBoundingBox().maxZ), // Second Corner
                                     RaycastContext.ShapeType.COLLIDER,
                                     RaycastContext.FluidHandling.NONE, client.player));
                     if (hit.getType() == HitResult.Type.BLOCK) {
@@ -48,8 +48,8 @@ public class wallJump {
                 if (client.player.getHorizontalFacing() == Direction.EAST){
                     BlockHitResult hit = client.world.raycast(
                             new RaycastContext(
-                                    client.player.getPos().subtract(0.1, -.9, 0.1),
-                                    client.player.getPos().add(-0.5, 1, 0.1),
+                                    new Vec3d(client.player.getBoundingBox().minX, client.player.getBoundingBox().minY, client.player.getBoundingBox().minZ), // First Corner
+                                    new Vec3d(client.player.getBoundingBox().maxX, client.player.getBoundingBox().maxY, client.player.getBoundingBox().maxZ), // Second Corner
                                     RaycastContext.ShapeType.COLLIDER,
                                     RaycastContext.FluidHandling.NONE, client.player));
                     if (hit.getType() == HitResult.Type.BLOCK) {
@@ -63,8 +63,8 @@ public class wallJump {
                 if (client.player.getHorizontalFacing() == Direction.WEST) {
                     BlockHitResult hit = client.world.raycast(
                             new RaycastContext(
-                                    client.player.getPos().subtract(.1, -.9, 0.1),
-                                    client.player.getPos().add(0.5, 1, .1),
+                                    new Vec3d(client.player.getBoundingBox().minX, client.player.getBoundingBox().minY, client.player.getBoundingBox().minZ), // First Corner
+                                    new Vec3d(client.player.getBoundingBox().maxX, client.player.getBoundingBox().maxY, client.player.getBoundingBox().maxZ), // Second Corner
                                     RaycastContext.ShapeType.COLLIDER,
                                     RaycastContext.FluidHandling.NONE, client.player));
                     if (hit.getType() == HitResult.Type.BLOCK) {
