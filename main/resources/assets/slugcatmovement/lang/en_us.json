@@ -1,3 +1,14 @@
 {
-  "block.slugcatmovement.pole_y": "Pole Vertical"
+  "block.slugcatmovement.pole_y": "Pole Vertical",
+  "block.slugcatmovement.pole_x": "Pole Horizontal X",
+  "block.slugcatmovement.pole_z": "Pole Horizontal Z",
+
+  "item.slugcatmovement.spear_item": "Spear",
+
+  "category.slugcatmovement.rainworld": "Rainworld Movement",
+  "key.slugcatmovement.crawl": "Crawl",
+  "key.slugcatmovement.grab": "Grab",
+  "key.slugcatmovement.drop": "Drop",
+
+  "itemGroup.slugcatmovement.rainworld_group": "Rainworld Movement"
 }

@@ -19,66 +19,68 @@ public class wallSlide {
                         BlockHitResult hit = client.world.raycast( // Raycast Shooter
                                 new RaycastContext(
                                         // raycast shoots thin box from center of player torso in the direction of Second Corner
-                                        new Vec3d(client.player.getBoundingBox().minX, client.player.getBoundingBox().minY, client.player.getBoundingBox().minZ), // First Corner
+                                        new Vec3d(client.player.getBoundingBox().minX, client.player.getBoundingBox().minY+0.5, client.player.getBoundingBox().minZ - 0.5), // First Corner
                                         new Vec3d(client.player.getBoundingBox().maxX, client.player.getBoundingBox().maxY, client.player.getBoundingBox().maxZ), // Second Corner
                                         RaycastContext.ShapeType.COLLIDER, // Shape Type
                                         RaycastContext.FluidHandling.NONE, client.player)); // extra Variables
                         if (hit.getType() == HitResult.Type.BLOCK) { // check if the detected thing is a block
                             BlockHitResult blockHit = (BlockHitResult) hit; // sets detected block
                             if (blockHit.getSide() != Direction.UP || blockHit.getSide() != Direction.DOWN) { // checks for side of block
-                                client.player.setMovementSpeed(0.07f); // movement speed modifier
-                                client.player.setVelocity(client.player.getVelocity().getX(), -0.06, client.player.getVelocity().getZ() ); // Slowing down fall with velocity
+                                if (client.options.forwardKey.isPressed()) {
+                                    client.player.setMovementSpeed(0.07f); // movement speed modifier
+                                    client.player.setVelocity(client.player.getVelocity().getX(), -0.06, client.player.getVelocity().getZ() ); // Slowing down fall with velocity
+                                }
                             }
                         }
                     }
                     if (client.player.getHorizontalFacing() == Direction.SOUTH) {
                         BlockHitResult hit = client.world.raycast(
                                 new RaycastContext(
-                                        new Vec3d(client.player.getBoundingBox().minX, client.player.getBoundingBox().minY, client.player.getBoundingBox().minZ), // First Corner
-                                        new Vec3d(client.player.getBoundingBox().maxX, client.player.getBoundingBox().maxY, client.player.getBoundingBox().maxZ), // Second Corner
+                                        new Vec3d(client.player.getBoundingBox().minX, client.player.getBoundingBox().minY+0.5, client.player.getBoundingBox().minZ), // First Corner
+                                        new Vec3d(client.player.getBoundingBox().maxX, client.player.getBoundingBox().maxY, client.player.getBoundingBox().maxZ + 0.5), // Second Corner
                                         RaycastContext.ShapeType.COLLIDER,
                                         RaycastContext.FluidHandling.NONE, client.player));
                         if (hit.getType() == HitResult.Type.BLOCK) {
                             BlockHitResult blockHit = (BlockHitResult) hit;
                             if (blockHit.getSide() != Direction.UP || blockHit.getSide() != Direction.DOWN) {
-                                client.player.setMovementSpeed(0.07f);
-                                client.player.fallDistance = 0;
-                                client.player.setVelocity(client.player.getVelocity().getX(), -0.06, client.player.getVelocity().getZ() );
-                                client.player.collidedSoftly = true;
+                                if (client.options.forwardKey.isPressed()) {
+                                    client.player.setMovementSpeed(0.07f);
+                                    client.player.setVelocity(client.player.getVelocity().getX(), -0.06, client.player.getVelocity().getZ() );
+                                }
                             }
                         }
                     }
                     if (client.player.getHorizontalFacing() == Direction.EAST){
                         BlockHitResult hit = client.world.raycast(
                                 new RaycastContext(
-                                        new Vec3d(client.player.getBoundingBox().minX, client.player.getBoundingBox().minY, client.player.getBoundingBox().minZ), // First Corner
-                                        new Vec3d(client.player.getBoundingBox().maxX, client.player.getBoundingBox().maxY, client.player.getBoundingBox().maxZ), // Second Corner
+                                        new Vec3d(client.player.getBoundingBox().minX, client.player.getBoundingBox().minY+0.5, client.player.getBoundingBox().minZ), // First Corner
+                                        new Vec3d(client.player.getBoundingBox().maxX + 0.5, client.player.getBoundingBox().maxY, client.player.getBoundingBox().maxZ), // Second Corner
                                         RaycastContext.ShapeType.COLLIDER,
                                         RaycastContext.FluidHandling.NONE, client.player));
                         if (hit.getType() == HitResult.Type.BLOCK) {
                             BlockHitResult blockHit = (BlockHitResult) hit;
                             if (blockHit.getSide() != Direction.UP || blockHit.getSide() != Direction.DOWN) {
-                                client.player.setMovementSpeed(0.07f);
-                                client.player.fallDistance = 0;
-                                client.player.setVelocity(client.player.getVelocity().getX(), -0.06, client.player.getVelocity().getZ() );
-                                client.player.collidedSoftly = true;
+                                if (client.options.forwardKey.isPressed()) {
+                                    client.player.setMovementSpeed(0.07f);
+                                    client.player.setVelocity(client.player.getVelocity().getX(), -0.06, client.player.getVelocity().getZ() );
+                                }
                             }
                         }
                     }
                     if (client.player.getHorizontalFacing() == Direction.WEST) {
                         BlockHitResult hit = client.world.raycast(
                                 new RaycastContext(
-                                        new Vec3d(client.player.getBoundingBox().minX, client.player.getBoundingBox().minY, client.player.getBoundingBox().minZ), // First Corner
+                                        new Vec3d(client.player.getBoundingBox().minX - 0.5, client.player.getBoundingBox().minY+0.5, client.player.getBoundingBox().minZ), // First Corner
                                         new Vec3d(client.player.getBoundingBox().maxX, client.player.getBoundingBox().maxY, client.player.getBoundingBox().maxZ), // Second Corner
                                         RaycastContext.ShapeType.COLLIDER,
                                         RaycastContext.FluidHandling.NONE, client.player));
                         if (hit.getType() == HitResult.Type.BLOCK) {
                             BlockHitResult blockHit = (BlockHitResult) hit;
                             if (blockHit.getSide() != Direction.UP || blockHit.getSide() != Direction.DOWN) {
-                                client.player.setMovementSpeed(0.07f);
-                                client.player.fallDistance = 0;
-                                client.player.setVelocity(client.player.getVelocity().getX(), -0.06, client.player.getVelocity().getZ() );
-                                client.player.collidedSoftly = true;
+                                if (client.options.forwardKey.isPressed()) {
+                                    client.player.setMovementSpeed(0.07f);
+                                    client.player.setVelocity(client.player.getVelocity().getX(), -0.06, client.player.getVelocity().getZ() );
+                                }
                             }
                         }
                     }

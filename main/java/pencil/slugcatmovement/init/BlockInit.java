@@ -7,11 +7,17 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import pencil.slugcatmovement.RainworldMovement;
+import pencil.slugcatmovement.block.PoleX;
 import pencil.slugcatmovement.block.PoleY;
+import pencil.slugcatmovement.block.PoleZ;
 
 public class BlockInit {
+    public static final Block POLE_X = registerWithItem("pole_x", new PoleX(AbstractBlock.Settings.create()
+            .noBlockBreakParticles()));
     public static final Block POLE_Y = registerWithItem("pole_y", new PoleY(AbstractBlock.Settings.create()
-            .strength(1.5F, 6.0F)));
+            .noBlockBreakParticles()));
+    public static final Block POLE_Z = registerWithItem("pole_z", new PoleZ(AbstractBlock.Settings.create()
+            .noBlockBreakParticles()));
 
     public static <T extends Block> T register(String name, T block){
         return Registry.register(Registries.BLOCK, RainworldMovement.id(name), block);

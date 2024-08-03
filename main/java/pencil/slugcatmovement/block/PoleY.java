@@ -1,10 +1,16 @@
 package pencil.slugcatmovement.block;
 
+import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -16,6 +22,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import pencil.slugcatmovement.RainworldMovement;
+import java.util.stream.Stream;
 
 public class PoleY extends Block {
 
@@ -24,12 +32,19 @@ public class PoleY extends Block {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient) {
+    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+        if (entity.isPlayer()) {
+            if (!world.isClient) {
 
+                // Pass the `BlockPos` information and pass whether the pole is in Y axis
+                PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
+                passedData.writeBoolean(true); // Is pole in y axis?
+                passedData.writeBlockPos(pos); // Block pos
+
+                // send the packet to the player
+                ServerSidePacketRegistry.INSTANCE.sendToPlayer((ServerPlayerEntity) entity, RainworldMovement.CLIMB_POLE_PACKET_ID,passedData);
+            }
         }
-
-        return ActionResult.SUCCESS;
     }
 
     @Override
